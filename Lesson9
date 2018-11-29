@@ -1,0 +1,72 @@
+import UIKit
+
+// 1. Создать строку произвольного текста, минимум 200 символов. Используя цикл и оператор свитч посчитать количество гласных, согласных, цифр и символов.
+
+var str = "1. Создать строку произвольного текста, минимум 200 символов. Используя цикл и оператор свитч посчитать количество гласных, согласных, цифр и символов. 2. Создайте свитч который принимает возраст человека и выводит описание жизненного этапа3. У вас есть имя отчество и фамилия студента (русские буквы). Имя начинается с А или О, то обращайтесь к студенту по имени, если же нет, то если у него отчество начинается на В или Д, то обращайтесь к нему по имени и отчеству, если же опять нет, то в случае если фамилия начинается с Е или З, то обращайтесь к нему только по фамилии. В противном случае обращайтесь к нему по полному имени. 4. Представьте что вы играете в морской бои и у вас осталось некоторое количество кораблей на поле 10Х10 (можно буквы и цифры, а можно только цифры). Вы должны создать свитч, который примет тюпл с координатой и выдаст один из вариантов: мимо, ранил, убил."
+
+var consonants = 0
+var vowels = 0
+var digits = 0
+var symbols = 0
+
+for i in str {
+    switch i {
+    case "а", "е", "ё", "и", "й", "о", "у", "ъ", "ь", "ы", "ю", "я": vowels += 1
+    case "б"..."щ": consonants += 1
+    case "0"..."9": digits += 1
+    default: symbols += 1
+    }
+}
+
+print("This sting has consonants - \(consonants), vowels - \(vowels), digits - \(digits), symbols - \(symbols)")
+
+// 2. Создайте свитч который принимает возраст человека и выводит описание жизненного этапа
+
+var age = 99
+
+switch age {
+case 0...6: print("You are child")
+case 7...17: print("School time")
+case 18...23: print("Univercity - Best Time")
+case 24...65: print("Time for work")
+case 66...99: print("You are retiree")
+case 100...120: print("Time too die")
+default: print("You age is out of range")
+}
+
+// 3. У вас есть имя отчество и фамилия студента (русские буквы). Имя начинается с А или О, то обращайтесь к студенту по имени, если же нет, то если у него отчество начинается на В или Д, то обращайтесь к нему по имени и отчеству, если же опять нет, то в случае если фамилия начинается с Е или З, то обращайтесь к нему только по фамилии. В противном случае обращайтесь к нему по полному имени.
+
+var name = "Владимир"
+var familyName = "Рындин"
+var fatherName = "Игоревич"
+
+switch (name, familyName, fatherName) {
+case let (n, _, _) where n.hasPrefix("А") || n.hasPrefix("О") :
+    print("Hello mister \(name)")
+case let (_, _, f) where f.hasPrefix("В") || f.hasPrefix("Д") :
+    print("Hello mister \(name) \(fatherName)")
+case let (_, fa, _) where fa.hasPrefix("Е") || fa.hasPrefix("З"):
+    print("Hello mister \(fatherName)")
+default:
+    print("Hello mister \(name) \(fatherName) \(familyName)")
+}
+
+// 4. Представьте что вы играете в морской бои и у вас осталось некоторое количество кораблей на поле 10Х10 (можно буквы и цифры, а можно только цифры). Вы должны создать свитч, который примет тюпл с координатой и выдаст один из вариантов: мимо, ранил, убил.
+
+func seaFight(coorShip: (Int, Int), shoot: (Int, Int)) -> () {
+    switch (coorShip, shoot) {
+    case let ((x, y), (z, w)) where x >= 10 || x < 0 || y >= 10 || y < 0 || z >= 10 || z < 0 || w >= 10 || w < 0:
+        print("Index is out of range")
+    case let ((x, y), (z, w)) where x != z && y != w:
+        print("You miss")
+    case let ((x, y), (z, w)) where x == z && y == w:
+        print("Killed")
+    case let ((x, y), (z, w)) where x == z && y != w:
+        print("Hurt")
+    case let ((x, y), (z, w)) where x != z && y == w:
+        print("Hurt")
+    default: print("Sea Fight")
+    }
+}
+
+seaFight(coorShip: (2, 2), shoot: (3, 2))
